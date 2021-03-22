@@ -23,7 +23,7 @@ def login():
                 flash('Incorrect password', category='error')
         else:
             flash('Email does not exists', category='error') 
-
+    
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
