@@ -24,7 +24,7 @@ def login():
         else:
             flash('Email does not exists', category='error') 
 
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
 # you cannot access this route unless user is logged in
@@ -59,6 +59,6 @@ def sign_up():
             db.session.commit()
             login_user(user, remember=True)
             flash('Account created!', category = 'success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.home', user=current_user))
 
     return render_template("sign_up.html")
