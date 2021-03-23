@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from .api import AppApi
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -9,6 +10,7 @@ DB_NAME = "database.db"
 def create_app():
     #name of the file initialize flask
     app = Flask(__name__)
+    app_api = AppApi(app)
     # encrypt session data, cookies etc, in production dont share secrete key
     app.config['SECRET_KEY'] = '123456789' 
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' 
@@ -20,6 +22,7 @@ def create_app():
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    # app.register_blueprint(app_api.api_prefix, url_prefix='/api')
 
     from .models import User, Note
     create_database(app)
